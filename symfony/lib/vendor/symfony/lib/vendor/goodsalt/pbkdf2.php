@@ -34,11 +34,7 @@ function create_hash($password)
 
 function validate_password($password, $good_hash)
 {
-	echo $password.' -- '.$good_hash.'<br>';
     $params = explode(":", $good_hash);
-	echo '<pre>';
-	print_r($params);
-	echo '</pre>';
     if(count($params) < HASH_SECTIONS)
        return false; 
     $pbkdf2 = base64_decode($params[HASH_PBKDF2_INDEX]);
