@@ -3,3 +3,119 @@
 [15-Jan-2013 06:05:33 UTC] PHP   1. {main}() /Users/max/Documents/orangehrm/install.php:0
 [15-Jan-2013 06:05:33 UTC] PHP   2. include() /Users/max/Documents/orangehrm/install.php:243
 [15-Jan-2013 06:05:33 UTC] PHP   3. require_once() /Users/max/Documents/orangehrm/installer/applicationSetup.php:22
+Tue Jan 15 07:57:53 2013,914 [64412] ERROR filter.ExceptionCatcherFilter - Uncaught Exception: exception 'Doctrine_Validator_Exception' with message 'Validation failed in class SystemUser
+
+  1 field had validation error:
+
+    * 1 validator failed on user_password (length)
+' in /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Transaction.php:265
+Stack trace:
+#0 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Connection.php(1395): Doctrine_Transaction->commit(NULL)
+#1 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Connection/UnitOfWork.php(148): Doctrine_Connection->commit()
+#2 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Record.php(1718): Doctrine_Connection_UnitOfWork->saveGraph(Object(SystemUser))
+#3 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/dao/SystemUserDao.php(31): Doctrine_Record->save()
+#4 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php(58): SystemUserDao->saveSystemUser(Object(SystemUser))
+#5 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/form/SystemUserForm.php(153): SystemUserService->saveSystemUser(Object(SystemUser), true)
+#6 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSystemUserAction.class.php(64): SystemUserForm->save()
+#7 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(952): saveSystemUserAction->execute(Object(sfWebRequest))
+#8 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(947): sfExecutionFilter->executeAction(Object(saveSystemUserAction))
+#9 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(933): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(saveSystemUserAction))
+#10 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfExecutionFilter->execute(Object(sfFilterChain))
+#11 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#12 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfCommonFilter->execute(Object(sfFilterChain))
+#13 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#14 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#15 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#16 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ModuleFilter->execute(Object(sfFilterChain))
+#17 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(97): sfFilterChain->execute()
+#18 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#19 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#20 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#21 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#22 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): OrangeI18NFilter->execute(Object(sfFilterChain))
+#23 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#24 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#25 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#26 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#27 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(995): sfFilterChain->execute()
+#28 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfRenderingFilter->execute(Object(sfFilterChain))
+#29 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(665): sfFilterChain->execute()
+#30 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(2352): sfController->forward('admin', 'saveSystemUser')
+#31 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(170): sfFrontWebController->dispatch()
+#32 /Users/max/Documents/orangehrm/symfony/web/index.php(22): sfContext->dispatch()
+#33 {main}
+
+Next exception 'DaoException' with message 'Validation failed in class SystemUser
+
+  1 field had validation error:
+
+    * 1 validator failed on user_password (length)
+' in /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/dao/SystemUserDao.php:34
+Stack trace:
+#0 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php(58): SystemUserDao->saveSystemUser(Object(SystemUser))
+#1 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/form/SystemUserForm.php(153): SystemUserService->saveSystemUser(Object(SystemUser), true)
+#2 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSystemUserAction.class.php(64): SystemUserForm->save()
+#3 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(952): saveSystemUserAction->execute(Object(sfWebRequest))
+#4 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(947): sfExecutionFilter->executeAction(Object(saveSystemUserAction))
+#5 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(933): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(saveSystemUserAction))
+#6 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfExecutionFilter->execute(Object(sfFilterChain))
+#7 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#8 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfCommonFilter->execute(Object(sfFilterChain))
+#9 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#10 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#11 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#12 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ModuleFilter->execute(Object(sfFilterChain))
+#13 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(97): sfFilterChain->execute()
+#14 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#15 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#16 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#17 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#18 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): OrangeI18NFilter->execute(Object(sfFilterChain))
+#19 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#20 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#21 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#22 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#23 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(995): sfFilterChain->execute()
+#24 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfRenderingFilter->execute(Object(sfFilterChain))
+#25 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(665): sfFilterChain->execute()
+#26 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(2352): sfController->forward('admin', 'saveSystemUser')
+#27 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(170): sfFrontWebController->dispatch()
+#28 /Users/max/Documents/orangehrm/symfony/web/index.php(22): sfContext->dispatch()
+#29 {main}
+
+Next exception 'ServiceException' with message 'Validation failed in class SystemUser
+
+  1 field had validation error:
+
+    * 1 validator failed on user_password (length)
+' in /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/service/SystemUserService.php:61
+Stack trace:
+#0 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/lib/form/SystemUserForm.php(153): SystemUserService->saveSystemUser(Object(SystemUser), true)
+#1 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmAdminPlugin/modules/admin/actions/saveSystemUserAction.class.php(64): SystemUserForm->save()
+#2 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(952): saveSystemUserAction->execute(Object(sfWebRequest))
+#3 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(947): sfExecutionFilter->executeAction(Object(saveSystemUserAction))
+#4 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(933): sfExecutionFilter->handleAction(Object(sfFilterChain), Object(saveSystemUserAction))
+#5 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfExecutionFilter->execute(Object(sfFilterChain))
+#6 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfCommonFilter.class.php(29): sfFilterChain->execute()
+#7 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfCommonFilter->execute(Object(sfFilterChain))
+#8 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/filter/orangehrmPostExecutionFilter.php(22): sfFilterChain->execute()
+#9 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): orangehrmPostExecutionFilter->execute(Object(sfFilterChain))
+#10 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ModuleFilter.php(56): sfFilterChain->execute()
+#11 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ModuleFilter->execute(Object(sfFilterChain))
+#12 /Users/max/Documents/orangehrm/symfony/plugins/orangehrmCorePlugin/lib/authorization/filter/ohrmAuthorizationFilter.php(97): sfFilterChain->execute()
+#13 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ohrmAuthorizationFilter->execute(Object(sfFilterChain))
+#14 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/SessionInfoFetcherFilter.php(67): sfFilterChain->execute()
+#15 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): SessionInfoFetcherFilter->execute(Object(sfFilterChain))
+#16 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/OrangeI18NFilter.php(58): sfFilterChain->execute()
+#17 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): OrangeI18NFilter->execute(Object(sfFilterChain))
+#18 /Users/max/Documents/orangehrm/symfony/apps/orangehrm/lib/filter/ExceptionCatcherFilter.php(26): sfFilterChain->execute()
+#19 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): ExceptionCatcherFilter->execute(Object(sfFilterChain))
+#20 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php(72): sfFilterChain->execute()
+#21 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfBasicSecurityFilter->execute(Object(sfFilterChain))
+#22 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(995): sfFilterChain->execute()
+#23 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(1031): sfRenderingFilter->execute(Object(sfFilterChain))
+#24 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(665): sfFilterChain->execute()
+#25 /Users/max/Documents/orangehrm/symfony/cache/orangehrm/prod/config/config_core_compile.yml.php(2352): sfController->forward('admin', 'saveSystemUser')
+#26 /Users/max/Documents/orangehrm/symfony/lib/vendor/symfony/lib/util/sfContext.class.php(170): sfFrontWebController->dispatch()
+#27 /Users/max/Documents/orangehrm/symfony/web/index.php(22): sfContext->dispatch()
+#28 {main}
