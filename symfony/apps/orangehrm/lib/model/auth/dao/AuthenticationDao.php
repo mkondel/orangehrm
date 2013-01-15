@@ -17,7 +17,6 @@ class AuthenticationDao extends BaseDao {
                 ->andWhere('deleted = 0');
 		
 		$user = $query->fetchOne();
-		echo $query.'<br>';
 		if(validate_password($password, $user->get('user_password'))){
 			return $user;
 		}
