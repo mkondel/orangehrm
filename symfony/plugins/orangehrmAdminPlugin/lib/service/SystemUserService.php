@@ -18,6 +18,9 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+
+require_once sfConfig::get('sf_root_dir').'/lib/vendor/symfony/lib/vendor/goodsalt/pbkdf2.php';
+
 class SystemUserService extends BaseService{
     
     protected $systemUserDao = null;
@@ -49,7 +52,8 @@ class SystemUserService extends BaseService{
         try {
             
             if ($changePassword) {
-                $systemUser->setUserPassword(md5($systemUser->getUserPassword().getUserName()));
+//                $systemUser->setUserPassword(md5($systemUser->getUserPassword().$systemUser->getUserName()));
+                $systemUser->setUserPassword(create_hash($systemUser->getUserPassword().$systemUser->getUserName()));
             }
 
             return $this->getSystemUserDao()->saveSystemUser($systemUser);

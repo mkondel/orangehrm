@@ -17,6 +17,9 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA
  */
+
+require_once sfConfig::get('sf_root_dir').'/lib/vendor/symfony/lib/vendor/goodsalt/pbkdf2.php';
+
 class AddEmployeeForm extends sfForm {
 
     private $employeeService;
@@ -213,7 +216,8 @@ class AddEmployeeForm extends sfForm {
                 $user->setDateEntered(date('Y-m-d H:i:s'));
                 $user->setCreatedBy(sfContext::getInstance()->getUser()->getAttribute('user')->getUserId());
                 $user->user_name = $posts['user_name'];
-                $user->user_password = md5($posts['user_password'].$posts['user_name']);
+//                $user->user_password = md5($posts['user_password'].$posts['user_name']);
+                $user->user_password = create_hash($posts['user_password'].$posts['user_name']);
                 $user->emp_number = $empNumber;
                 $user->setStatus(($posts['status'] == 'Enabled') ? '1' : '0');
                 $user->setUserRoleId(2);
