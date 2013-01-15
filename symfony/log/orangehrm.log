@@ -1,0 +1,5 @@
+[15-Jan-2013 06:05:33 UTC] PHP Fatal error:  Class 'sfConfig' not found in /Users/max/Documents/orangehrm/installer/ApplicationSetupUtility.php on line 21
+[15-Jan-2013 06:05:33 UTC] PHP Stack trace:
+[15-Jan-2013 06:05:33 UTC] PHP   1. {main}() /Users/max/Documents/orangehrm/install.php:0
+[15-Jan-2013 06:05:33 UTC] PHP   2. include() /Users/max/Documents/orangehrm/install.php:243
+[15-Jan-2013 06:05:33 UTC] PHP   3. require_once() /Users/max/Documents/orangehrm/installer/applicationSetup.php:22

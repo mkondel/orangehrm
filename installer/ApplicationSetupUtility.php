@@ -18,7 +18,7 @@
  *
  */
 
-require_once sfConfig::get('sf_root_dir').'/lib/vendor/symfony/lib/vendor/goodsalt/pbkdf2.php';
+require_once ROOT_PATH.'/symfony/lib/vendor/symfony/lib/vendor/goodsalt/pbkdf2.php';
 require_once ROOT_PATH.'/lib/common/UniqueIDGenerator.php';
 
 class ApplicationSetupUtility {
@@ -216,6 +216,7 @@ public static function createUser() {
 
 //	$query = "INSERT INTO `ohrm_user` ( `user_name`, `user_password`,`user_role_id`) VALUES ('" .$_SESSION['defUser']['AdminUserName']. "','".md5($_SESSION['defUser']['AdminPassword'].$_SESSION['defUser']['AdminUserName'])."','1')";
 	$query = "INSERT INTO `ohrm_user` ( `user_name`, `user_password`,`user_role_id`) VALUES ('" .$_SESSION['defUser']['AdminUserName']. "','".create_hash($_SESSION['defUser']['AdminPassword'].$_SESSION['defUser']['AdminUserName'])."','1')";
+	echo 'POOP';
 
 	if(!mysql_query($query)) {
 		$_SESSION['error'] = 'Unable to Create OrangeHRM Admin User Account';
