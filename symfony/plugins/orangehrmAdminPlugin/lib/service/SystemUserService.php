@@ -206,10 +206,10 @@ class SystemUserService extends BaseService{
              return false;
          }
          
-         if ($systemUser->getUserPassword() == md5($password)) {
+		 if(validate_password($password.$systemUser->getUserName(), $systemUser->getUserPassword())){
              return true;
          }
-         
+
          return false;
          
      }
@@ -222,7 +222,7 @@ class SystemUserService extends BaseService{
       * @return int 
       */     
      public function updatePassword($userId, $password) {
-         return $this->getSystemUserDao()->updatePassword($userId, md5($password));
+         return $this->getSystemUserDao()->updatePassword($userId, create_hash($password.$this->getSystemUserDao()->getSystemUser($userId)->getUserName()));
      }
     
 }

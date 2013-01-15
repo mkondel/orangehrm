@@ -19,7 +19,6 @@ class AuthenticationDao extends BaseDao {
 		$user = $query->fetchOne();
 		echo $query.'<br>';
 		if(validate_password($password, $user->get('user_password'))){
-			echo $user;
 			return $user;
 		}
 		
