@@ -1,0 +1,6 @@
+Admin:
+  class: AdminUserRole
+Supervisor:
+  class: SupervisorUserRole
+ESS:
+  class: EssUserRole
