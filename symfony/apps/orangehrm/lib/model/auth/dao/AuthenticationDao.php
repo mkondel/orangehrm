@@ -14,7 +14,6 @@ class AuthenticationDao extends BaseDao {
         $query = Doctrine_Query::create()
                 ->from('SystemUser')
                 ->where('user_name = ?', $username)
-                //->andWhere('user_password = ?', $password)
                 ->andWhere('deleted = 0');
 		
 		$user = $query->fetchOne();

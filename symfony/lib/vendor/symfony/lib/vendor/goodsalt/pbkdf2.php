@@ -8,8 +8,8 @@
 // These constants may be changed without breaking existing hashes.
 define("PBKDF2_HASH_ALGORITHM", "sha256");
 define("PBKDF2_ITERATIONS", 1000);
-define("PBKDF2_SALT_BYTES", 2);
-define("PBKDF2_HASH_BYTES", 2);
+define("PBKDF2_SALT_BYTES", 24);
+define("PBKDF2_HASH_BYTES", 24);
 
 define("HASH_SECTIONS", 4);
 define("HASH_ALGORITHM_INDEX", 0);

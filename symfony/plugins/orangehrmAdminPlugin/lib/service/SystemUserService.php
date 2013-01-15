@@ -52,7 +52,6 @@ class SystemUserService extends BaseService{
         try {
             
             if ($changePassword) {
-//                $systemUser->setUserPassword(md5($systemUser->getUserPassword().$systemUser->getUserName()));
                 $systemUser->setUserPassword(create_hash($systemUser->getUserPassword().$systemUser->getUserName()));
             }
 

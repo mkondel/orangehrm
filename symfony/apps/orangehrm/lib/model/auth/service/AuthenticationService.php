@@ -65,9 +65,7 @@ class AuthenticationService extends BaseService {
      * @throws AuthenticationServiceException
      */
     public function setCredentials($username, $password, $additionalData) {
-//        $user = $this->getAuthenticationDao()->getCredentials($username, md5($password.$username));
 		$user = $this->getAuthenticationDao()->getCredentials($username, $password.$username);
-//        $user = $this->getAuthenticationDao()->getCredentials($username, create_hash($password.$username));
 
         if (is_null($user) || !$user) {
             return false;
