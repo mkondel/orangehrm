@@ -49,7 +49,7 @@ class SystemUserService extends BaseService{
         try {
             
             if ($changePassword) {
-                $systemUser->setUserPassword(md5($systemUser->getUserPassword()));
+                $systemUser->setUserPassword(md5($systemUser->getUserPassword().getUserName()));
             }
 
             return $this->getSystemUserDao()->saveSystemUser($systemUser);
