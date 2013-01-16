@@ -1,3 +1,21 @@
+These are additions to the OrangeHRM souce code.  The original README is still kept below, but I wanted to first describe what are the new features.  I primarily wanted a simple timesheets solution for my new company.  OHRM is open source, and it actually works right out of the box!  I used a TurnKey Linux OrangeHRM appliance on an EC2 instance to try it out.
+
+Features I want to add:
+* Secure hashing of passwords stored in mysql
+* Email alerts when timesheets are rejected
+* CSV export of timesheet and report data
+
+-- Secure hashing of passwords stored in mysql --
+Issue: OHRM uses md5() on the password string from user input, then stores that in the mysql.  Same password string from different users would result in the same hash string in the DB.  Followed this guide and used their posted code: http://crackstation.net/hashing-security.htm.  Actual code here lives under 'symfony/lib/vendor/symfony/lib/vendor/goodhash/pbkdf2.php'.
+
+Highlights of this solution:
+* Passwords are concatenated with the username
+* Random salt is generated on new user creation and password changes
+* Key stretching is applied
+* SHA256 cypher is used instead of MD5
+
+
+--- Original OHRM README ---
 
 OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures 
 all the essential functionalities required for any enterprise. 
