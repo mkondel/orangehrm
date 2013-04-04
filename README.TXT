@@ -14,6 +14,13 @@ Highlights of this solution:
 * Key stretching is applied
 * SHA256 cypher is used instead of MD5
 
+Installation:
+* git clone git@github.com:mkondel/orangehrm.git
+* chmod -R a+w lib/confs lib/logs symfony/config symfony/apps/orangehrm/config symfony/cache symfony/log
+* go to http://<your-ip>, follow the steps in the installer
+* drop DB in mysql
+* import from prod
+
 
 --- Original OHRM README ---
 
