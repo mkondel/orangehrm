@@ -1,9 +1,12 @@
-These are additions to the OrangeHRM souce code.  The original README is still kept below, but I wanted to first describe what are the new features.  I primarily wanted a simple timesheets solution for my new company.  OHRM is open source, and it actually works right out of the box!  I used a TurnKey Linux OrangeHRM appliance on an EC2 instance to try it out.
+#max
+
+These are additions to the OrangeHRM souce code.  The original README is still kept below.  I primarily wanted a simple timesheets solution for my new company.  OHRM is open source, and it actually works right out of the box!  I used a TurnKey Linux OrangeHRM appliance on an EC2 instance to try it out.
 
 Features I want to add:
 * [Done] Secure hashing of passwords stored in mysql
 * Email alerts when timesheets are rejected
-* CSV export of timesheet and report data
+* File export of timesheet and report data -> PDF, CSV
+* Be able to display reports with weeks as rows and hours/day as columns (be able to export or print to PDF)
 
 -- Secure hashing of passwords stored in mysql --
 Issue: OHRM uses md5() on the password string from user input, then stores that in the mysql.  Same password string from different users would result in the same hash string in the DB.  Followed this guide and used their posted code: http://crackstation.net/hashing-security.htm.  Actual code here lives under 'symfony/lib/vendor/symfony/lib/vendor/goodhash/pbkdf2.php'.
@@ -15,11 +18,13 @@ Highlights of this solution:
 * SHA256 cypher is used instead of MD5
 
 Installation:
+(if mirroring prod, export ORHM's db via...)
 * git clone git@github.com:mkondel/orangehrm.git
 * chmod -R a+w lib/confs lib/logs symfony/config symfony/apps/orangehrm/config symfony/cache symfony/log
-* go to http://<your-ip>, follow the steps in the installer
-* drop DB in mysql
-* import from prod
+* go to http://<your-ip>, follow the steps in the installer (make sure the DB name is the same as prod)
+* drop ORHM's db in mysql
+* create new with the same name
+* import from prod (make sure the name in the import is the same)
 
 
 --- Original OHRM README ---
