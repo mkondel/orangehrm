@@ -1,3 +1,1 @@
-START<!-- <?php include_component('core', 'ohrmList', $parmetersForListComponent); ?> -->
-END
-
+MAX displayProjectActivityDetailsReportSuccess.php> <?php include_component('core', 'ohrmList', $parmetersForListComponent); ?>

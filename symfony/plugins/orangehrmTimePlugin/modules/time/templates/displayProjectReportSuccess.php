@@ -1,2 +1,2 @@
-<?php include_component('core', 'ohrmList', $parmetersForListComponent); ?>
+MAX displayProjectReportSuccess.php> <?php include_component('core', 'ohrmList', $parmetersForListComponent); ?>
 
