@@ -6,7 +6,7 @@
 
 MAX displayProjectReportCriteriaSuccess.php>
 <div class="outerbox" id="outerbox" style="width: 60%">
-    <div class="mainHeading"><h2 id="reportToHeading">MAX reports> <?php echo __($reportName); ?></h2></div>
+    <div class="mainHeading"><h2 id="reportToHeading"><?php echo __($reportName); ?></h2></div>
     <form action="<?php echo url_for("time/displayProjectReportCriteria?reportId=1"); ?>" id="reportForm" method="post">
 
         <div class="employeeTable">

@@ -1,4 +1,145 @@
 <?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
+MAX-start _ohmList.php><br><!-- max paste timesheet display code here...-->
+
+<table  border="0" cellpadding="5" cellspacing="0" class="data-table" id="dataTable">
+    <thead>
+        <tr>
+            <td id="projectColumn" ><?php echo __("Project Name") ?></td>
+            <td id ="activityColumn" ><?php echo __("Activity Name") ?></td>
+
+            <?php foreach ($rowDates as $data): ?>
+                <td><?php echo __(date('D', strtotime($data))); ?> <br/><?php echo date('j', strtotime($data)); ?></td><td class="commentIcon"></td>
+            <?php endforeach; ?>
+
+            <td><?php echo __("Total") ?></td>
+        </tr>
+    </thead>
+    <tr><td id="noRecordsColumn" colspan="100"></td></tr>
+    <?php if (isset($toggleDate)): ?>
+        <?php $selectedTimesheetStartDate = $toggleDate ?>
+    <?php else: ?>
+        <?php $selectedTimesheetStartDate = $timesheet->getStartDate() ?>
+    <?php endif; ?>
+    <?php if ($timesheetRows == null) : ?>
+        <!-- colspan should be based on  the fields in a timesheet-->
+        <tr>
+            <td id="noRecordsColumn" colspan="100"><br><?php echo __("No Records Found") ?></td>
+        </tr>
+
+    <?php else: ?>
+        <?php $class = 'odd'; ?>
+        <?php foreach ($timesheetRows as $timesheetItemRow): ?>
+            <?php if ($format == '1') { ?>
+                <?php $total = '0:00'; ?>
+            <?php } ?>
+            <?php if ($format == '2') { ?>
+                <?php $total = 0; ?>
+            <?php } ?>
+
+
+            <tr class="<?php echo $class; ?>">
+                <?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
+	<td id="columnName"><?php echo str_replace("##", "", html_entity_decode($timesheetItemRow['projectName'])); ?>
+                <td id="columnName"><?php echo html_entity_decode($timesheetItemRow['activityName']); ?>
+
+                    <?php foreach ($timesheetItemRow['timesheetItems'] as $timesheetItemObjects): ?>
+                        <?php if ($format == '1') { ?>
+                        <td class="duration"><?php echo ($timesheetItemObjects->getDuration() == null ) ? "0:00" : $timesheetItemObjects->getConvertTime(); ?></td>
+                        <td class="commentIcon">
+                        <?php 
+                        if ($timesheetItemObjects->getComment() != null) {
+                           echo image_tag('callout.png', 
+                                     array('id' => 'callout_'. $timesheetItemObjects->getTimesheetItemId(),
+                                           'class' => 'icon')); 
+                        } ?>
+                        </td>
+                    <?php } ?>
+                    <?php if ($format == '2') { ?>
+                        <td class="duration"><?php echo ($timesheetItemObjects->getDuration() == null ) ? "0.00" : $timesheetItemObjects->getConvertTime(); ?></td>
+                        <td class="commentIcon">
+                        <?php 
+                          if ($timesheetItemObjects->getComment() != null) {
+                              echo image_tag('callout.png', 
+                                     array('id' => 'callout_'. $timesheetItemObjects->getTimesheetItemId(),
+                                           'class' => 'icon')); 
+
+                          } ?>
+                        </td>
+                    <?php } ?>
+
+                    <?php if ($format == '1') { ?>
+                        <?php $total+=$timesheetItemObjects->getDuration(); ?>
+                    <?php } ?>
+                    <?php if ($format == '2') { ?>
+                        <?php $total+=$timesheetItemObjects->getConvertTime(); ?>
+                    <?php } ?>
+                <?php endforeach; ?>
+
+                <?php if ($format == '1') { ?>
+                    <td id= "total"><?php echo $timeService->convertDurationToHours($total) ?><td>
+                    <?php } ?>
+                    <?php if ($format == '2') { ?>
+                    <td id="total"><?php echo number_format($total, 2, '.', ''); ?><td>
+                    <?php } ?>
+
+
+            </tr>
+
+        <?php endforeach; ?>
+        <tr><td colspan="100"></tr>
+        <tr class="even">
+            <td id="totalVertical"><?php echo __('Total'); ?></td>
+            <td></td>
+            <?php if ($format == '1') { ?>
+                <?php $weeksTotal = '0:00' ?>
+            <?php } ?>
+            <?php if ($format == '2') { ?>
+                <?php $weeksTotal = 0.00 ?>
+            <?php } ?>   
+            <?php foreach ($rowDates as $data): ?>
+                <?php if ($format == '1') { ?>
+                    <?php $verticalTotal = '0:00'; ?>
+                <?php } ?>
+                <?php if ($format == '2') { ?>
+                    <?php $verticalTotal = 0.00; ?>
+                <?php } ?>
+
+                <?php foreach ($timesheetRows as $timesheetItemRow): ?>
+                    <?php foreach ($timesheetItemRow['timesheetItems'] as $timesheetItemObjects): ?>
+                        <?php if ($data == $timesheetItemObjects->getDate()): ?>
+                            <?php if ($format == '1') { ?>
+                                <?php $verticalTotal+=$timesheetItemObjects->getDuration(); ?>
+                            <?php } ?>
+                            <?php if ($format == '2') { ?>
+                                <?php $verticalTotal+=$timesheetItemObjects->getConvertTime(); ?>
+                            <?php } ?>
+                            <?php continue; ?>
+                        <?php endif; ?>              
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+
+                <?php if ($format == '1') { ?>
+                    <td id ="totalVerticalValue"><?php echo $timeService->convertDurationToHours($verticalTotal); ?> </td>
+                <?php } ?>
+                <?php if ($format == '2') { ?>
+                    <td id ="totalVerticalValue"><?php echo number_format($verticalTotal, 2, '.', ''); ?> </td>
+                <?php } ?>
+
+                <td></td>
+
+                <?php $weeksTotal+=$verticalTotal; ?>
+            <?php endforeach; ?>
+            <?php if ($format == '1') { ?>
+                <td id="total"><?php echo $timeService->convertDurationToHours($weeksTotal); ?></td>
+            <?php } ?>
+            <?php if ($format == '2') { ?>
+                <td id="total"><?php echo number_format($weeksTotal, 2, '.', ''); ?></td>
+            <?php } ?>
+            <td></td></tr>
+    <?php endif; ?>
+
+</table>
+
 <?php
 if ($tableWidth == 'auto') {
     $outboxWidth = 0;
@@ -66,7 +207,7 @@ function printButtonEventBindings($buttons) {
 ?>
 <div class="outerbox" style="padding-right: 15px; width: <?php echo $outboxWidth; ?>">
 <?php if (!empty($title)) { ?>
-        <div class="mainHeading"><h2>MAX _ohrmList.php>  <?php echo __($title); ?></h2></div>
+        <div class="mainHeading"><h2><?php echo __($title); ?></h2></div>
 
 <?php if ($partial != null): ?>
         <div style="padding-left: 5px; padding-top: 5px;">
@@ -358,3 +499,4 @@ function printButtonEventBindings($buttons) {
     });
 
 </script>
+MAX-end _ohmList.php>

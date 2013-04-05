@@ -92,7 +92,7 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
 
     <div id="validationMsg"><?php echo isset($messageData) ? templateMessage($messageData) : ''; ?></div>
     <div class="outerbox" style="width: <?php echo $width . 'px' ?>;">
-        <div class="maincontent">
+       <div class="maincontent">
             <table  border="0" cellpadding="5" cellspacing="0" class="data-table" id="dataTable">
                 <thead>
                     <tr>
@@ -128,6 +128,24 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
                             <?php $total = 0; ?>
                         <?php } ?>
 
+MAX-start><br><br>
+<?php
+echo 'Project name:'.html_entity_decode($timesheetItemRow['projectName']).
+	'<br>Project ID:'.html_entity_decode($timesheetItemRow['projectId']).
+	'<br>isProjectDeleted: '.html_entity_decode($timesheetItemRow['isProjectDeleted']).
+	'<br>activityId:'.html_entity_decode($timesheetItemRow['activityId']).
+	'<br>activityName: '.html_entity_decode($timesheetItemRow['activityName']).
+	'<br>isActivityDeleted: '.html_entity_decode($timesheetItemRow['isActivityDeleted']);
+
+echo '<br><h1>timesheetItems:</h1> ';
+foreach($timesheetItemRow['timesheetItems'] as $theitem){
+	if($theitem['timesheetItemId']){
+		echo '<br><br>';
+		foreach($theitem as $key => $value) { echo $key.' - '.$value.'<br>'; }
+	}
+}
+?>
+<br><br>end-MAX
 
                         <tr class="<?php echo $class; ?>">
                             <?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
