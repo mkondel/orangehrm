@@ -1,2 +1,3 @@
-<?php include_component('core', 'ohrmList', $parmetersForListComponent); ?>
+START<!-- <?php include_component('core', 'ohrmList', $parmetersForListComponent); ?> -->
+END
 

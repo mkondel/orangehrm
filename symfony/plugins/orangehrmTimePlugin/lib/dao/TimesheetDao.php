@@ -307,6 +307,57 @@ class TimesheetDao {
             throw new DaoException($ex->getMessage());
         }
     }
+	
+	
+	
+	
+    /**
+     * Get TimesheetActionLog by given Timesheet Id
+     * @param $timesheetActionLogId
+     * @return TimesheetActionLog
+     */
+    public function getTimesheetItemsByDateRangeProjectId($startDate, $endDate, $projectId) {
+		
+		// this section gets the list of timesheet items by projectId and the date range
+		//start
+		try{
+			$query = Doctrine_Query::create()
+					->from("TimesheetItem")
+					->where("projectId = ?", $projectId)
+					->where("date >= ?", $startDate)
+					->where("date <= ?", $endDate)
+					->orderBy("date");
+			$results = $query->execute();
+			return $results;
+// WHERE project_id = 17 AND date >= '2013-03-14' and date <= '2013-03-31' ORDER BY date
+
+		} catch (Exception $ex) {
+            throw new DaoException($ex->getMessage());
+        }
+		//end
+
+		// this section checks is the timesheet has been approved
+		// start
+        try {
+            $query = Doctrine_Query::create()
+                    ->from("TimesheetActionLog")
+                    ->where("timesheetId = ?", $timesheetId)
+                    ->orderBy('timesheetActionLogId');
+
+            $results = $query->execute();
+            if ($results[0]->getTimesheetActionLogId() == null) {
+				//try to return just the [0] element == latest?
+                return null;
+            } else {
+                return $results;
+            }
+        } catch (Exception $ex) {
+            throw new DaoException($ex->getMessage());
+        }
+		// end
+    }
+	
+	
 
     /**
      * Get start and end days of each timesheet
