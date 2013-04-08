@@ -4,7 +4,6 @@
 <script type="text/javascript" src="<?php echo public_path('../../scripts/jquery/ui/ui.datepicker.js') ?>"></script>
 <?php echo javascript_include_tag('orangehrm.datepicker.js') ?>
 
-MAX displayProjectReportCriteriaSuccess.php>
 <div class="outerbox" id="outerbox" style="width: 60%">
     <div class="mainHeading"><h2 id="reportToHeading"><?php echo __($reportName); ?></h2></div>
     <form action="<?php echo url_for("time/displayProjectReportCriteria?reportId=1"); ?>" id="reportForm" method="post">

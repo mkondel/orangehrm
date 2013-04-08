@@ -144,6 +144,18 @@ foreach($timesheetItemRow['timesheetItems'] as $theitem){
 		foreach($theitem as $key => $value) { echo $key.' - '.$value.'<br>'; }
 	}
 }
+
+// $foo = $this->getTimesheetService();
+
+function getTimesheetService() {
+
+    if (is_null($this->timesheetService)) {
+
+        $this->timesheetService = new TimesheetService();
+    }
+
+    return $this->timesheetService;
+}
 ?>
 <br><br>end-MAX
 

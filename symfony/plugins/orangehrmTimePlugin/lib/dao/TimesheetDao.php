@@ -312,7 +312,7 @@ class TimesheetDao {
 	
 	
     /**
-     * Get TimesheetActionLog by given Timesheet Id
+     * MAX 
      * @param $timesheetActionLogId
      * @return TimesheetActionLog
      */
@@ -323,9 +323,9 @@ class TimesheetDao {
 		try{
 			$query = Doctrine_Query::create()
 					->from("TimesheetItem")
-					->where("projectId = ?", $projectId)
-					->where("date >= ?", $startDate)
-					->where("date <= ?", $endDate)
+					->where("project_id = ?", $projectId)
+					->andWhere("date >= ?", $startDate)
+					->andWhere("date <= ?", $endDate)
 					->orderBy("date");
 			$results = $query->execute();
 			return $results;
@@ -338,22 +338,22 @@ class TimesheetDao {
 
 		// this section checks is the timesheet has been approved
 		// start
-        try {
-            $query = Doctrine_Query::create()
-                    ->from("TimesheetActionLog")
-                    ->where("timesheetId = ?", $timesheetId)
-                    ->orderBy('timesheetActionLogId');
-
-            $results = $query->execute();
-            if ($results[0]->getTimesheetActionLogId() == null) {
-				//try to return just the [0] element == latest?
-                return null;
-            } else {
-                return $results;
-            }
-        } catch (Exception $ex) {
-            throw new DaoException($ex->getMessage());
-        }
+				//         try {
+				//             $query = Doctrine_Query::create()
+				//                     ->from("TimesheetActionLog")
+				//                     ->where("timesheetId = ?", $timesheetId)
+				//                     ->orderBy('timesheetActionLogId');
+				// 
+				//             $results = $query->execute();
+				//             if ($results[0]->getTimesheetActionLogId() == null) {
+				// //try to return just the [0] element == latest?
+				//                 return null;
+				//             } else {
+				//                 return $results;
+				//             }
+				//         } catch (Exception $ex) {
+				//             throw new DaoException($ex->getMessage());
+				//         }
 		// end
     }
 	
