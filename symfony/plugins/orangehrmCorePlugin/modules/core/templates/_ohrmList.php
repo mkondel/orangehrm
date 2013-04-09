@@ -1,6 +1,6 @@
 <?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
 
-<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<!-- styles for weekly report table -->
 <style type="text/css">
 /* week table */
 table.week-table {
@@ -76,9 +76,6 @@ td {
 </style>
 
 <?php
-
-//foreach ($array as $key => $value)
-
 	// var_dump($_POST);
 	$startDate = $_POST['time']['project_date_range']['from'];
 	$endDate = $_POST['time']['project_date_range']['to'];
@@ -87,7 +84,7 @@ td {
     $employeeService = new EmployeeService();
 	$timesheetItems = $timesheetDao->getTimesheetItemsByDateRangeProjectId($startDate, $endDate, $projectId);
 
-	$all = [ ];//"foo" => "bar", "bar" => "foo" ];
+	$all = [ ];
 	$all_activities = [ ];
 	$all_names = [ ];
 	foreach($timesheetItems as $theitem){
@@ -95,15 +92,10 @@ td {
 			
 			// with this i want to get approved status...
 			$foo = $timesheetDao->getTimesheetActionLogByTimesheetId($theitem['timesheetId']);
-			
+
 			$employee = $employeeService->getEmployee($theitem['employeeId']);
 			$name = $employee->getFirstName() . " " . $employee->getLastName();
-			
 			$activity_name = $timesheetDao->getActivityByActivityId($theitem['activityId'])->getName();
-			
-			// $theitem['projectId'] -> 1
-			// $theitem['comment'] -> Metting with 
-			// foreach($theitem as $key => $value){ echo sprintf("\$theitem['<b>%s</b>'] -> <u>%s</u><br>", $key, $value); }
 			$hours = $theitem['duration']/3600;
 			$all[$theitem['date']]['day total'] += $hours;
 			$all[$theitem['date']]['project activities'][$activity_name]['activity total'] += $hours;
@@ -274,12 +266,6 @@ function printButtonEventBindings($buttons) {
 		$i++;
 	}
 	echo '</table>';
-	
-	// echo '<pre>';
-		// print_r($all);
-		// echo count($weeks).'<br>';
-		// print_r($weeks);
-	// echo '</pre>';
 ?>
 
 

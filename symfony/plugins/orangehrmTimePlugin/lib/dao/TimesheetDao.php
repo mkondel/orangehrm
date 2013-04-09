@@ -312,14 +312,15 @@ class TimesheetDao {
 	
 	
     /**
-     * MAX 
-     * @param $timesheetActionLogId
-     * @return TimesheetActionLog
+     * returns all timesheet items for a given project id and date range
+     * @param $startDate ex.'2013-04-01'
+     * @param $endDate ex.'2013-04-01'
+     * @param $projectId ex.'17'
+     * @return TimesheetItemsList
      */
     public function getTimesheetItemsByDateRangeProjectId($startDate, $endDate, $projectId) {
 		
 		// this section gets the list of timesheet items by projectId and the date range
-		//start
 		try{
 			$query = Doctrine_Query::create()
 					->from("TimesheetItem")
@@ -329,36 +330,10 @@ class TimesheetDao {
 					->orderBy("date");
 			$results = $query->execute();
 			return $results;
-// WHERE project_id = 17 AND date >= '2013-03-14' and date <= '2013-03-31' ORDER BY date
 
 		} catch (Exception $ex) {
             throw new DaoException($ex->getMessage());
         }
-		//end
-
-        $query = Doctrine_Query::create()
-                ->from('Timesheet')
-                ->where('employee_id = ?', $employeeId)
-                ->andWhereIn('state', $stateList);
-		// this section checks is the timesheet has been approved
-		// start
-				//         try {
-				//             $query = Doctrine_Query::create()
-				//                     ->from("TimesheetActionLog")
-				//                     ->where("timesheetId = ?", $timesheetId)
-				//                     ->orderBy('timesheetActionLogId');
-				// 
-				//             $results = $query->execute();
-				//             if ($results[0]->getTimesheetActionLogId() == null) {
-				// //try to return just the [0] element == latest?
-				//                 return null;
-				//             } else {
-				//                 return $results;
-				//             }
-				//         } catch (Exception $ex) {
-				//             throw new DaoException($ex->getMessage());
-				//         }
-		// end
     }
 	
 	
