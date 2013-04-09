@@ -336,6 +336,10 @@ class TimesheetDao {
         }
 		//end
 
+        $query = Doctrine_Query::create()
+                ->from('Timesheet')
+                ->where('employee_id = ?', $employeeId)
+                ->andWhereIn('state', $stateList);
 		// this section checks is the timesheet has been approved
 		// start
 				//         try {

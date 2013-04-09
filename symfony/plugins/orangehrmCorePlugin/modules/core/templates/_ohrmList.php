@@ -2,21 +2,49 @@
 
 MAX-start _orhmList.php><br><br>
 <?php
-	var_dump($_POST);
+	// var_dump($_POST);
 	$startDate = $_POST['time']['project_date_range']['from'];
 	$endDate = $_POST['time']['project_date_range']['to'];
 	$projectId = $_POST['time']['project_name'];
 	$timesheetDao = new TimesheetDao();
+    $employeeService = new EmployeeService();
 	$timesheetItems = $timesheetDao->getTimesheetItemsByDateRangeProjectId($startDate, $endDate, $projectId);
 
+	echo '<table border="1">';
+	$all = [ ];//"foo" => "bar", "bar" => "foo" ];
 	foreach($timesheetItems as $theitem){
 		if($theitem['timesheetItemId']){
-			echo '<br><br>';
-			foreach($theitem as $key => $value){
-				echo sprintf("\$theitem['timesheetItemId']['<b>%s</b>'] -> <u>%s</u><br>", $key, $value);
-			}
+			
+			// with this i want to get approved status...
+			$foo = $timesheetDao->getTimesheetActionLogByTimesheetId($theitem['timesheetId']);
+			
+			$employee = $employeeService->getEmployee($theitem['employeeId']);
+			$name = $employee->getFirstName() . " " . $employee->getLastName();
+			
+			$activity_name = $timesheetDao->getActivityByActivityId($theitem['activityId'])->getName();
+			
+			// $theitem['projectId'] -> 1
+			// $theitem['comment'] -> Metting with 
+			// foreach($theitem as $key => $value){ echo sprintf("\$theitem['<b>%s</b>'] -> <u>%s</u><br>", $key, $value); }
+			$all[$theitem['date']]['day total'] += $theitem['duration']/3600;
+			$all[$theitem['date']]['project activities'][$activity_name]['activity total'] += $theitem['duration']/3600;
+			$all[$theitem['date']]['project activities'][$activity_name]['resources'][$name] = $theitem['duration']/3600;
 		}
 	}
+	echo '</table>';
+	echo $startDate.'<br>'.date("Y-m-d", strtotime('last monday', strtotime($startDate)));
+	echo '<pre>';
+		print_r($all);
+	echo '</pre>';
+	
+	// now arrange by calendar weeks ==> easier for front end to render as a table...
+	// function arrange_by_calendar(){
+	// 	$startDate = start date;
+	// 	$endDate = end date;
+	// 	$startMonday = find start monday;
+	// 	$endMonday = find end monday;
+	// 	$numWeeks = count of weeks;
+	// }
 ?>
 <br><br>MAX-end _orhmList.php<br><br>
 
