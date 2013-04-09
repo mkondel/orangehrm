@@ -1,6 +1,5 @@
 <?php echo use_stylesheet('../orangehrmCorePlugin/css/_ohrmList.css'); ?>
 
-MAX-start _orhmList.php><br><br>
 <?php
 
 //foreach ($array as $key => $value)
@@ -55,35 +54,119 @@ MAX-start _orhmList.php><br><br>
 		$day += 86400;
 	}
 	
-	echo '<table width="70%" border="1"><th>Activity Names</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>';
+	?>
+	<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+	<style type="text/css">
+	/* week table */
+	table.week-table {
+		font-family: verdana,arial,sans-serif;
+		width: 92%;
+		margin: 0 auto;
+		border-collapse: collapse;
+	}
+	table.week-table th {
+		border-width: 5px;
+		padding: 1px;
+		border-style: solid;
+		border-color: #FAD163;
+		width: 12%;
+		font-size: 16px;
+	}
+	table.week-table td {
+		vertical-align: top;
+		text-align: center;
+		width: 12%;
+	}
+	table.week-table tr {
+		border-style: solid;
+		border-width: 3px;
+		padding: 5px;
+	}
+	
+	/* day table */
+	table.day-table{
+		margin: 0 auto;
+	}
+	table.day-table td{
+		width: 100%;
+	}
+	
+	/* headings table */
+	table.heading-column-table{
+		margin: 0 auto;
+	}
+	table.heading-column-table td{
+		text-align: right;
+		min-width: 200px;
+	}
+	
+	/* misc TD's shared by nested tables */
+	td.total{
+		border-width: 1px !important ;
+		border-top: dotted ;
+		padding: 5px !important ;
+		font-weight: bold;
+	}
+	td.resource-names{
+		font-size: 6px;
+		font-style: italic;
+	}
+	td.date-heading{
+		font-size: 12px !important;
+		text-decoration: underline !important;
+		padding: 5px !important;
+	}
+	td.activity{
+		font-weight: bold;
+		font-style: italic;
+	}
+	td {
+		font-size: 10px;
+	}
+	</style>
+	<?php
+	
+	echo '<table class="week-table"><th>Activity Names</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>';
 
-	//this is the Activity Names column
 	$i = 0;
 	foreach(array_keys($weeks) as $day){
+		
+		//this is the Activity Names column
 		if( $i%7 == 0 ){
-			echo '<tr><td valign="top" align="right"><table border="5">';
+			echo '<tr><td><table class="heading-column-table"><tr><td class="date-heading"><br></td></tr>';
 			foreach ($all_activities as $activity_name=>$activity_details){
-				echo '<tr><td><h5>'.$activity_name.'</h5></td></tr>';
+				echo '<tr><td class="activity">'.$activity_name.':</td></tr>';
 				foreach($all_names as $name=>$names_total){
-					echo '<tr><td><small><small> ---> '.$name.'</small></small></td></tr>';
+					echo '<tr><td class="resource-names">'.$name.'</td></tr>';
 				}
 			}
+			echo '<tr><td class="total">Total: </td></tr>';
 			echo '</table></td>';
 		}
 		
 		// this is the day cell
-		echo '<td valign="top" align="center"><table border="5"><tr><td><u>'.date('M-d',strtotime($day)).'</u><h5>'.$weeks[$day]['day total'].'</h5></td></tr>';
+		echo '<td><table class="day-table"><tr><td class="date-heading">'.date('M-d',strtotime($day)).'</td></tr>';
 		foreach ($all_activities as $activity_name=>$activity_details){
-			echo '<tr><td><h5>'.$activity_details['activity total'].'</h5></td></tr>';
+			if($weeks[$day]['project activities'][$activity_name]['activity total']){
+				echo '<tr><td class="activity">'.$weeks[$day]['project activities'][$activity_name]['activity total'].'</td></tr>';
+			}
+			else{
+				echo '<tr><td><b><br></b></td></tr>';
+			}
 			foreach($all_names as $name=>$names_total){
 				// echo $weeks[$day]['project activities'][$activity_name]['resources'][$name];
 				if($weeks[$day]['project activities'][$activity_name]['resources'][$name] != ''){
-					echo '<tr><td><small><small> ---> '.$weeks[$day]['project activities'][$activity_name]['resources'][$name].'</small></small></td></tr>';
+					echo '<tr><td class="resource-names">'.$weeks[$day]['project activities'][$activity_name]['resources'][$name].'</td></tr>';
 				}
 				else{
-					echo '<tr><td></td></tr>';
+					echo '<tr><td class="resource-names"><br></td></tr>';
 				}
 			}
+		}
+		if($weeks[$day]['day total']){
+			echo '<tr><td class="total">'.$weeks[$day]['day total'].' hr</td></tr>';
+		}else{
+			echo '<tr><td class="total"><br></td></tr>';
 		}
 		echo '</table></td>';
 		
@@ -94,13 +177,12 @@ MAX-start _orhmList.php><br><br>
 	}
 	echo '</table>';
 	
-	echo '<pre>';
+	// echo '<pre>';
 		// print_r($all);
 		// echo count($weeks).'<br>';
-		print_r($weeks);
-	echo '</pre>';
+		// print_r($weeks);
+	// echo '</pre>';
 ?>
-<br><br>MAX-end _orhmList.php<br><br>
 
 <?php
 if ($tableWidth == 'auto') {
