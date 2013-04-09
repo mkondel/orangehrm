@@ -128,37 +128,6 @@ use_javascript('../../../scripts/jquery/ui/ui.dialog.js');
                             <?php $total = 0; ?>
                         <?php } ?>
 
-MAX-start><br><br>
-<?php
-echo 'Project name:'.html_entity_decode($timesheetItemRow['projectName']).
-	'<br>Project ID:'.html_entity_decode($timesheetItemRow['projectId']).
-	'<br>isProjectDeleted: '.html_entity_decode($timesheetItemRow['isProjectDeleted']).
-	'<br>activityId:'.html_entity_decode($timesheetItemRow['activityId']).
-	'<br>activityName: '.html_entity_decode($timesheetItemRow['activityName']).
-	'<br>isActivityDeleted: '.html_entity_decode($timesheetItemRow['isActivityDeleted']);
-
-echo '<br><h1>timesheetItems:</h1> ';
-foreach($timesheetItemRow['timesheetItems'] as $theitem){
-	if($theitem['timesheetItemId']){
-		echo '<br><br>';
-		foreach($theitem as $key => $value) { echo $key.' - '.$value.'<br>'; }
-	}
-}
-
-// $foo = $this->getTimesheetService();
-
-function getTimesheetService() {
-
-    if (is_null($this->timesheetService)) {
-
-        $this->timesheetService = new TimesheetService();
-    }
-
-    return $this->timesheetService;
-}
-?>
-<br><br>end-MAX
-
                         <tr class="<?php echo $class; ?>">
                             <?php $class = $class == 'odd' ? 'even' : 'odd'; ?>
 				<td id="columnName"><?php echo str_replace("##", "", html_entity_decode($timesheetItemRow['projectName'])); ?>
