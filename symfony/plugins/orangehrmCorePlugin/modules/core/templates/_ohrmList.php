@@ -2,6 +2,9 @@
 
 MAX-start _orhmList.php><br><br>
 <?php
+
+//foreach ($array as $key => $value)
+
 	// var_dump($_POST);
 	$startDate = $_POST['time']['project_date_range']['from'];
 	$endDate = $_POST['time']['project_date_range']['to'];
@@ -10,8 +13,9 @@ MAX-start _orhmList.php><br><br>
     $employeeService = new EmployeeService();
 	$timesheetItems = $timesheetDao->getTimesheetItemsByDateRangeProjectId($startDate, $endDate, $projectId);
 
-	echo '<table border="1">';
 	$all = [ ];//"foo" => "bar", "bar" => "foo" ];
+	$all_activities = [ ];
+	$all_names = [ ];
 	foreach($timesheetItems as $theitem){
 		if($theitem['timesheetItemId']){
 			
@@ -26,25 +30,75 @@ MAX-start _orhmList.php><br><br>
 			// $theitem['projectId'] -> 1
 			// $theitem['comment'] -> Metting with 
 			// foreach($theitem as $key => $value){ echo sprintf("\$theitem['<b>%s</b>'] -> <u>%s</u><br>", $key, $value); }
-			$all[$theitem['date']]['day total'] += $theitem['duration']/3600;
-			$all[$theitem['date']]['project activities'][$activity_name]['activity total'] += $theitem['duration']/3600;
-			$all[$theitem['date']]['project activities'][$activity_name]['resources'][$name] = $theitem['duration']/3600;
+			$hours = $theitem['duration']/3600;
+			$all[$theitem['date']]['day total'] += $hours;
+			$all[$theitem['date']]['project activities'][$activity_name]['activity total'] += $hours;
+			$all[$theitem['date']]['project activities'][$activity_name]['resources'][$name] = $hours;
+			
+			$all_activities[$activity_name] += $hours;
+			$all_names[$name] += $hours;
 		}
 	}
-	echo '</table>';
-	echo $startDate.'<br>'.date("Y-m-d", strtotime('last monday', strtotime($startDate)));
-	echo '<pre>';
-		print_r($all);
-	echo '</pre>';
-	
 	// now arrange by calendar weeks ==> easier for front end to render as a table...
-	// function arrange_by_calendar(){
-	// 	$startDate = start date;
-	// 	$endDate = end date;
-	// 	$startMonday = find start monday;
-	// 	$endMonday = find end monday;
-	// 	$numWeeks = count of weeks;
-	// }
+	$startMonday = strtotime('last monday', strtotime(array_keys($all)[0]));
+	$endMonday = strtotime('last monday', strtotime(end(array_keys($all))));
+	
+	$weeks = [ ];
+	$day = $startMonday;
+	while($day < strtotime('next monday', $endMonday) ){
+		if(isset($all[date('Y-m-d',$day)])){
+			$weeks[date('Y-m-d',$day)] = $all[date('Y-m-d',$day)];
+		}
+		else{
+			$weeks[date('Y-m-d',$day)] = '';
+		}
+		$day += 86400;
+	}
+	
+	echo '<table width="70%" border="1"><th>Activity Names</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>';
+
+	//this is the Activity Names column
+	$i = 0;
+	foreach(array_keys($weeks) as $day){
+		if( $i%7 == 0 ){
+			echo '<tr><td valign="top" align="right"><table border="5">';
+			foreach ($all_activities as $activity_name=>$activity_details){
+				echo '<tr><td><h5>'.$activity_name.'</h5></td></tr>';
+				foreach($all_names as $name=>$names_total){
+					echo '<tr><td><small><small> ---> '.$name.'</small></small></td></tr>';
+				}
+			}
+			echo '</table></td>';
+		}
+		
+		// this is the day cell
+		echo '<td valign="top" align="center"><table border="5"><tr><td><u>'.date('M-d',strtotime($day)).'</u><h5>'.$weeks[$day]['day total'].'</h5></td></tr>';
+		foreach ($all_activities as $activity_name=>$activity_details){
+			echo '<tr><td><h5>'.$activity_details['activity total'].'</h5></td></tr>';
+			foreach($all_names as $name=>$names_total){
+				// echo $weeks[$day]['project activities'][$activity_name]['resources'][$name];
+				if($weeks[$day]['project activities'][$activity_name]['resources'][$name] != ''){
+					echo '<tr><td><small><small> ---> '.$weeks[$day]['project activities'][$activity_name]['resources'][$name].'</small></small></td></tr>';
+				}
+				else{
+					echo '<tr><td></td></tr>';
+				}
+			}
+		}
+		echo '</table></td>';
+		
+		if( $i%7 == 6 ){
+			echo '</tr>';
+		}
+		$i++;
+	}
+	echo '</table>';
+	
+	echo '<pre>';
+		// print_r($all);
+		// echo count($weeks).'<br>';
+		print_r($weeks);
+	echo '</pre>';
 ?>
 <br><br>MAX-end _orhmList.php<br><br>
 
