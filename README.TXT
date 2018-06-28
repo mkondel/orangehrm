@@ -1,3 +1,5 @@
+# If you end us using this code, please give my repo a star!
+
 These are additions to the OrangeHRM souce code.  The original README is still kept below, but I wanted to first describe what are the new features.  I primarily wanted a simple timesheets solution for my new company.  OHRM is open source, and it actually works right out of the box!  I used a TurnKey Linux OrangeHRM appliance on an EC2 instance to try it out.
 
 Features I want to add:
